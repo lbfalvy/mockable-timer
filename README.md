@@ -14,38 +14,43 @@ use case. Unit testing implies dependency injection
 
 ### Client
 
+Import the default implementation which depends on `Date.now()`,
+`setTimeout`, `setInterval`, `clearTimeout` and `clearInterval`
+
 ```ts
 import { time } from 'mockable-timer'
 ```
 
-Import the default implementation, which depends on `Date.now()`,
-`setTimeout`, `setInterval`, `clearTimeout` and `clearInterval`
+Get the exact UNIX timestamp in seconds. It's not in milliseconds because
+most platforms zero out the two last digits anyway to prevent cache
+timing attacks so the real part is inaccurate anyway, and this way
+durations within human perception range are easier to read and compare.
+
+The part after the decimal point still contains the 100s part of Date.now(),
+if you want to use it for benchmarking.
 
 ```ts
 time.now()
-```
-
-Get the exact UNIX timestamp in seconds. It's not in milliseconds because
-most platforms zero out the two last digits anyway to prevent cache
-timing attacks and this way durations within human perception range are
-easier to read and compare
-
-```ts
-const cancel = time.wait(60, () => alert('Are you still there?'))
-cancel()
 ```
 
 Set a timeout. The time is in seconds for consistency. `wait` returns a
 function, calling this function cancels the timeout.
 
 ```ts
-time.wait(60, () => alert('Another minute passed'), true)
+const cancel = time.wait(60, () => alert('Are you still there?'))
+cancel()
 ```
 
 Set an interval. The third parameter is a boolean that defaults to
 `false`.
 
+```ts
+time.wait(60, () => alert('Another minute passed'), true)
+```
+
 ### Mock
+
+The time manager defines the following methods:
 
 ```ts
 import { mockTime } from 'mockable-timer'
@@ -63,7 +68,6 @@ export interface TimeManager {
 }
 ```
 
-The time manager supports the following methods:
 
 - **`progress`**: Moves time forward by the specified number of seconds
 - **`progressTo`**: Moves time to the specified point, throws if the

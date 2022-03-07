@@ -1,10 +1,23 @@
 {
   "name": "mockable-timer",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Service that wraps Date.now(), setTimeout and setInterval for mockability",
   "main": "build/cjs/index.js",
   "module": "build/esm/index.js",
   "types": "build/types/index.d.ts",
+  "keywords": [
+    "time",
+    "DI",
+    "dependency injection",
+    "wrapper",
+    "mock",
+    "testing",
+    "unit testing",
+    "setTimeout",
+    "setInterval",
+    "Date.now",
+    "typescript"
+  ],
   "scripts": {
     "build": "rollup --config",
     "test": "jest",
